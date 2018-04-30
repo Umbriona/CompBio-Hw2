@@ -15,10 +15,10 @@ def sumProb(mutation,n):
 def main():
     n=100
     populationSize = 10000000
-    mutationProbability=100
+    mutationProbability=5
     stirlingNumber = np.zeros([n,])
     mNumbers = np.zeros([n,])
-
+    nNumbers = np.zeros([100,])
     i = 0
     for num in stirlingNumber:
         stirlingNumber[i] = Decimal(stir.stirling1(n,i+1))
@@ -27,14 +27,25 @@ def main():
     for num in stirlingNumber:
         mNumbers[i] = i+1
         i+=1
+    i=0
+    for num in nNumbers:
+        nNumbers[i] = i + 1
+        i += 1
 
     ewensSampling = np.array(abs(stirlingNumber)*mutationProbability**(mNumbers-1)/sumProb(mutationProbability,n))
     evalH, evalP, nAlleles = proc.Coalescent(mutationProbability,populationSize,n)
-    plt.plot(mNumbers,ewensSampling)
+    #plt.plot(mNumbers,ewensSampling)
     #plt.hist(evalH,bins=20,normed=1,facecolor='green')
+    #n_bins = len(set(nAlleles))
+    #plt.hist(nAlleles, bins=n_bins, normed=1, facecolor='red')
+    #plt.title('')
+    #plt.show()
+
+    evalH_inf, analytic, nAlleles_inf = proc.Coalescent_InfinitSite(mutationProbability, populationSize, n)
+    plt.plot(nNumbers, analytic[n-2,:])
+    plt.hist(nAlleles_inf,bins=30,normed=1,facecolor='green')
     n_bins = len(set(nAlleles))
-    plt.hist(nAlleles, bins=n_bins, normed=1, facecolor='red')
-    plt.title('')
+    #plt.hist(nAlleles_inf, bins=n_bins, normed=1, facecolor='red')
     plt.show()
 
 
