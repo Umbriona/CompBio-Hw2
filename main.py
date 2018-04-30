@@ -15,7 +15,7 @@ def sumProb(mutation,n):
 def main():
     n=100
     populationSize = 10000000
-    mutationProbability=10
+    mutationProbability=100
     stirlingNumber = np.zeros([n,])
     mNumbers = np.zeros([n,])
 
@@ -29,9 +29,12 @@ def main():
         i+=1
 
     ewensSampling = np.array(abs(stirlingNumber)*mutationProbability**(mNumbers-1)/sumProb(mutationProbability,n))
-    evalN = proc.Coalescent(mutationProbability,populationSize,n)
-    gcf = plt.figure()
-    plt.plot(mNumbers,ewensSampling,mNumbers,evalN)
+    evalH, evalP, nAlleles = proc.Coalescent(mutationProbability,populationSize,n)
+    plt.plot(mNumbers,ewensSampling)
+    #plt.hist(evalH,bins=20,normed=1,facecolor='green')
+    n_bins = len(set(nAlleles))
+    plt.hist(nAlleles, bins=n_bins, normed=1, facecolor='red')
+    plt.title('')
     plt.show()
 
 
