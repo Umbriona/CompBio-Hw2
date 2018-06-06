@@ -66,7 +66,7 @@ def Coalescent(mutation,populationSize,sampleSize):
     return [poiProbh, poiProbp, allels]
 
 def Coalescent_InfinitSite(mutation,populationSize,sampleSize):
-    numberOfTriles = 10000
+    numberOfTriles = 1000000
     taverage = np.zeros((sampleSize-1)*numberOfTriles, dtype=np.float32)
     poiProbh = []
     poiProbp = np.zeros(100)
